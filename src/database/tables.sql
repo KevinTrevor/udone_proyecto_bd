@@ -1,3 +1,6 @@
+CREATE DATABASE chikkins;
+SELECT chikkins;
+
 CREATE TABLE cliente(
     cedula VARCHAR(10) PRIMARY KEY NOT NULL,
     nombre VARCHAR(100),
