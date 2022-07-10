@@ -1,5 +1,4 @@
-import sqlite3
-from sqlite3 import Error
+from psycopg2 import Error
 from connect import create_connection
 
 def read_file(path):

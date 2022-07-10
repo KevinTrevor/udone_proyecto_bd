@@ -1,5 +1,5 @@
-from flask import Flask
-import models
+from flask import Flask, jsonify, request
+from models import insert_costumers
 
 def create_app():
     """Función que crea y define los Blueprints de la REST API de Chikkkins.
@@ -8,7 +8,6 @@ def create_app():
         Flask: Objeto Flask para correr una aplicación web.
     """
     
-    
     app = Flask(__name__)
 
     @app.route('/')
@@ -16,9 +15,19 @@ def create_app():
         return "<h1> Hello, Python! </h1>"
     
     @app.route('/costumers', methods=['POST'])
-    def create_client():
-        data = ("29582382", "Kevin", "04127955420", "kevintrevor0905@gmail.com")
-        models.insert_costumers(data)
+    def create_costumer():
+        nombre = request.json['name']
+        cedula = request.json['cedula']
+        email = request.json['email']
+        whatsapp = request.json['whatsapp']
+        
+        data = (cedula, nombre, whatsapp, email)
+        
+        costumer_id = insert_costumers(data)
+        
+        if costumer_id:
+            return jsonify({'message': 'New costumers added!'})
+        return jsonify({'message': 'Internal error!'})
     
     @app.route('/costumers', methods=['PUT'])
     def modify_client():

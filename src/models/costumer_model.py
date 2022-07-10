@@ -6,7 +6,7 @@ def insert_costumers(data):
     
     conn = get_connection()
     
-    sql = "INSERT INTO cliente (cedula, nombre, whatsapp, email) VALUES (?, ?, ?, ?)"
+    sql = f"INSERT INTO cliente (cedula, nombre, whatsapp, email) VALUES(%s, %s, %s, %s);"
     
     try:
         curs = conn.cursor()
@@ -15,7 +15,8 @@ def insert_costumers(data):
         
         return curs.lastrowid
     except Error as e:
-        return e
+        print(f"Error at insert_costumers(): {e}")
+        return False
     finally:
         if conn:
             curs.close()

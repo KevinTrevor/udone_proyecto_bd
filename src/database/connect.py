@@ -9,6 +9,7 @@ def get_connection():
     """
     
     conn = None
+    
     try:
         conn = psycopg2.connect(
             host= "localhost",
@@ -17,5 +18,6 @@ def get_connection():
             database= "chikkins"
         )
     except DatabaseError as e:
-        return e
+        print(f"Error at database connection: {e}") 
+        
     return conn

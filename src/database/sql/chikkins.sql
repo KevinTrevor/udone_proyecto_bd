@@ -1,16 +1,9 @@
-CREATE DATABASE IF NOT EXISTS chikkins
-    WITH
-    OWNER = postgres
-    ENCODING = 'UTF8'
-    LC_COLLATE = 'Spanish_Venezuela.1252'
-    LC_CTYPE = 'Spanish_Venezuela.1252'
-    TABLESPACE = pg_default
-    CONNECTION LIMIT = -1;
+CREATE DATABASE IF NOT EXISTS chikkins;
 
 CREATE TABLE IF NOT EXISTS cliente(
     cedula VARCHAR(10) PRIMARY KEY NOT NULL,
     nombre VARCHAR(100),
-    whatsapp VARCHAR(12) UNIQUE,
+    whatsapp VARCHAR(20) UNIQUE,
     email VARCHAR(100) UNIQUE
 );
 
