@@ -1,5 +1,6 @@
 import psycopg2
 from psycopg2 import DatabaseError
+from decouple import config
 
 def get_connection():
     """Función que conecta con la base de datos. En caso de error, devuelve una excepción.
@@ -7,17 +8,12 @@ def get_connection():
     Returns:
         connection: Devuelve la conexión con la base de datos.
     """
-    
-    conn = None
-    
     try:
-        conn = psycopg2.connect(
-            host= "localhost",
-            user= "postgres",
-            password= "0905*KdR",
-            database= "chikkins"
+        return psycopg2.connect(
+            host= config('PGHOST'),
+            user= config('PGUSER'),
+            password= config('PGPASSWORD'),
+            database= config('PGDATABASE')
         )
-    except DatabaseError as e:
-        print(f"Error at database connection: {e}") 
-        
-    return conn
+    except DatabaseError as ex:
+        raise ex 
