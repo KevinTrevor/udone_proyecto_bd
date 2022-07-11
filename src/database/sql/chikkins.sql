@@ -10,12 +10,12 @@ CREATE TABLE IF NOT EXISTS pedidos(
     cedula VARCHAR(10) REFERENCES cliente (cedula),
     cantidad INTEGER NOT NULL,
     monto_delivery MONEY GENERATED ALWAYS AS (5 * cantidad) STORED NOT NULL,
+    modo_pago VARCHAR(20) NOT NULL,
     total MONEY NOT NULL,
     screenshot BYTEA,
     estado VARCHAR(20) NOT NULL,
     fecha DATE NOT NULL,
     hora TIME NOT NULL,
-    direccion VARCHAR(100) NOT NULL,
     ciudad VARCHAR(50) NOT NULL,
     municipio VARCHAR(50) NOT NULL,
     observaciones VARCHAR(500) NOT NULL

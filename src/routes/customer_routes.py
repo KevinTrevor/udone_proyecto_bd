@@ -11,5 +11,5 @@ def get_costumers():
     return jsonify({'message': 'Work in progress...'})
 
 @customer.route('/<cedula>', methods= ['PUT'])
-def show_costumers(cedula):
+def modify_costumer(cedula):
     return jsonify({'message': 'Work in progress...'})
