@@ -13,7 +13,7 @@ class Customer:
         """Método que devuelve un formato transformable a JSON de la clase Customer.
         
         Returns:
-        dict(str, Any): Diccionario transformable a formato JSON. 
+        dict(str, str): Diccionario transformable a formato JSON. 
         """
         return {
             'cedula' : self.cedula,

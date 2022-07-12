@@ -4,15 +4,15 @@ class Order:
 
     def __init__(
             self, id, cedula, cantidad, monto_delivery,
-            total, modo_pago, screenshot, estado, fecha, 
+            modo_pago, total, screenshot, estado, fecha, 
             hora, ciudad, municipio, observaciones):
         """Método constructor de la clase Order."""
         self.id = id
         self.cedula = cedula
         self.cantidad = cantidad
         self.monto_delivery = monto_delivery
-        self.total = total
         self.modo_pago = modo_pago
+        self.total = total
         self.screenshot = screenshot
         self.estado = estado
         self.fecha = fecha
@@ -25,10 +25,10 @@ class Order:
         """Método que devuelve un formato transformable a JSON de la clase Order.
         
         Returns:
-        dict(str, Any): Diccionario transformable a formato JSON. 
+        dict(str, str): Diccionario transformable a formato JSON. 
         """
         return {
-            'quantity' : self.cantidad,
+            'quantity' : str(self.cantidad),
             'payment_method' : self.modo_pago,
             'remarks' : self.observaciones,
             'city' : self.ciudad,
@@ -38,6 +38,6 @@ class Order:
             'payment_screenshot' : self.screenshot,
             'status' : self.estado,
             'delivery_amount' : f"${self.monto_delivery}",
-            'order_number' : self.id,
+            'order_number' : str(self.id),
             'datetime' : f"{self.fecha} {self.hora}"
         }
