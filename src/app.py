@@ -1,11 +1,11 @@
 from flask import Flask, jsonify, request
-from models import insert_costumers
 from database import setup
 from config import config
 
 # Routes
 from routes import customer, order
 
+# Crea todas las tablas de la base de datos si no han sido creadas.
 setup.create_tables()
 
 def create_app():
