@@ -49,3 +49,37 @@ class FileExtension:
     @classmethod
     def is_allowed_file(self, filename):
         return '.' in filename and filename.rsplit('.', 1)[1].lower() in self.ALLOWED_EXTENSION
+
+
+class QueryParamsSQL:
+
+    @classmethod
+    def get_sql_query(self, data):
+        """Función que retorna una sentencia SQL dependiendo de la tupla de datos enviada.
+        
+        Returns:
+            str: Sentencia SQL.
+        """
+
+        sql = "SELECT * FROM pedidos"
+
+        if data[0] is not None or data[1] is not None or data[2] is not None:
+            sql = sql + " " + "WHERE"
+            if data[0] is not None and data[0] != '':
+                sql = sql + " " + f"fecha = '{data[0]}'"
+
+                if data[1] is not None and data[1] != '':
+                    sql = sql + " " + f"AND estado = '{data[1]}'"
+
+                if data[2] is not None and data[2] != '':
+                    sql = sql + " " + f"AND cedula = '{data[2]}'"
+
+            elif data[1] is not None and data[1] != '':
+                sql = sql + " " + f"estado = '{data[1]}'"
+
+                if data[2] is not None and data[2] != '':
+                    sql = sql + " " + f"AND cedula = '{data[2]}'"
+
+            elif data[2] is not None and data[2] != '':
+                sql = sql + " " + f"cedula = '{data[2]}'"
+        return sql

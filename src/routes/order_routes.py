@@ -55,7 +55,9 @@ def modify_order_status(id):
         data = (status, id) # Creamos una tupla con los valores del formato JSON.
         OrderModel.update_order_status(data) # Se usa la tupla para modificar un pedido específico.
 
-        return jsonify({'message' : 'Order successfully modified!'})
+        updated_order = OrderModel.select_order_by_id(id)
+
+        return jsonify(updated_order)
     except Exception as ex:
         return jsonify({'message': str(ex)})
     
@@ -91,8 +93,15 @@ def add_order_screenshot(id):
 @order.route('/', methods= ['GET'])
 def get_orders():
     try:
-        query_parameters = request.args.to_dict()
+        query_params = request.args.to_dict()
+        data = (
+            query_params.get('date', None),
+            query_params.get('status', None),
+            query_params.get('cedula', None)
+        )
 
-        return jsonify(query_parameters)
+        orders = OrderModel.select_order_by_query_params(data)
+
+        return jsonify(orders)
     except Exception as ex:
         return jsonify({'message': str(ex)})

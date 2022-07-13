@@ -1,5 +1,6 @@
 from database import get_connection
 from .entities import Order
+from utils import QueryParamsSQL
 
 class OrderModel:
 
@@ -58,9 +59,43 @@ class OrderModel:
             raise Exception(ex)
 
     @classmethod
-    def select_order_by(self, data):
-        pass
-    
+    def select_order_by_query_params(self, data):
+
+        sql = str(QueryParamsSQL.get_sql_query(data))
+
+        print(sql)
+        
+        try: 
+            connection = get_connection()
+            orders = []
+
+            with connection.cursor() as cursor:
+                cursor.execute(sql)
+                result = cursor.fetchall()
+                
+                for row in result:
+                    order = Order(
+                    row[0], 
+                    row[1], 
+                    row[2], 
+                    row[3],
+                    row[4], 
+                    row[5], 
+                    row[6], 
+                    row[7],
+                    row[8], 
+                    row[9], 
+                    row[10], 
+                    row[11],
+                    row[12]
+                    )
+                    orders.append(order.to_JSON())
+
+            connection.close()
+            return orders
+        except Exception as ex:
+            raise Exception(ex)
+
     @classmethod
     def select_last_order(self):
         """Función que selecciona el último pedido registrado en la base de datos"""
@@ -72,6 +107,41 @@ class OrderModel:
 
             with connection.cursor() as cursor:
                 cursor.execute(sql)
+                row = cursor.fetchone()
+                
+                order = Order(
+                    row[0], 
+                    row[1], 
+                    row[2], 
+                    row[3],
+                    row[4], 
+                    row[5], 
+                    row[6], 
+                    row[7],
+                    row[8], 
+                    row[9], 
+                    row[10], 
+                    row[11],
+                    row[12]
+                    )
+
+            connection.close()
+
+            return order.to_JSON()
+        except Exception as ex:
+            raise Exception(ex)
+
+    @classmethod
+    def select_order_by_id(self, id):
+        """Función que selecciona un pedido específico registrado en la base de datos"""
+
+        sql = "SELECT * FROM pedidos WHERE id = (%s)"
+
+        try:
+            connection = get_connection()
+
+            with connection.cursor() as cursor:
+                cursor.execute(sql, (id, ))
                 row = cursor.fetchone()
                 
                 order = Order(

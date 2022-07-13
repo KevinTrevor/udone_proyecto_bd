@@ -18,9 +18,9 @@ def create_costumer():
             data_json['whatsapp'], 
             data_json['email']
         ) # Creamos una tupla con los valores del formato JSON.
-        CustomerModel.insert_costumers(data) # Se usa la tupla para crear un nuevo cliente.
+        CustomerModel.insert_customers(data) # Se usa la tupla para crear un nuevo cliente.
 
-        return jsonify({'message' : 'New customer added successfully!'})
+        return jsonify(data_json)
     except Exception as ex:
         return jsonify({'message': str(ex)}), 500
 
@@ -32,7 +32,7 @@ def get_costumers():
         Response: Un archivo en formato JSON.
     """
     try:
-        customers = CustomerModel.select_all_costumers() # Nos retorna todos las filas registradas.
+        customers = CustomerModel.select_all_customers() # Nos retorna todos las filas registradas.
         
         return jsonify(customers)
     except Exception as ex:
@@ -50,11 +50,12 @@ def modify_costumer(cedula):
         data = (
             data_json['name'], 
             data_json['whatsapp'], 
-            data_json['email'], 
+            data_json['email'],
             cedula
             )  # Creamos una tupla con los valores del formato JSON.
-        CustomerModel.update_costumer(data) # Se usa la tupla para modificar a un cliente.
-        
-        return jsonify({'message' : 'Customer successfully modified!'})
+        CustomerModel.update_customer(data) # Se usa la tupla para modificar a un cliente.
+        updated_customer = CustomerModel.select_customer_by_cedula(cedula)
+
+        return jsonify(updated_customer)
     except Exception as ex:
         return jsonify({'message': str(ex)}), 500
