@@ -1,9 +1,12 @@
+import os
 from datetime import datetime
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, flash, request, redirect, url_for
 from models import OrderModel
 from utils import DateTimeFormat, Money, FileExtension
+from werkzeug.utils import secure_filename
 
 order = Blueprint('order_blueprint', __name__)
+path = 'C:\images'
 
 @order.route('/', methods= ['POST'])
 def create_order():
@@ -71,18 +74,22 @@ def add_order_screenshot(id):
     """
     try:
         # Se revisa que exista la llave screenshot.
-        if 'screenshot' not in request.files: 
-            jsonify({'message' : 'No file part!'})
+        if 'screenshot' not in request.files:
+            flash('No file part')
+            return jsonify({'message' : 'No file part'})
         
         screenshot = request.files['screenshot']
 
         # Se revisa que se haya seleccionado algún archivo.
         if screenshot.filename == '': 
-            jsonify({'message' : 'No selected file!'})
+            flash('No selected file!')
+            return jsonify({'message' : 'No selected file!'})
         
         # Se revisa si tiene una extensión permitida (png/jpg). 
-        if screenshot and FileExtension.is_allowed_file(screenshot.filename): 
-            data = (screenshot.filename, id)
+        if screenshot and FileExtension.is_allowed_file(screenshot.filename):               
+            filename = secure_filename(screenshot.filename)           
+            screenshot.save(os.path.join(path, filename))
+            data = (filename, id)
             OrderModel.insert_order_screenshoot(data)
 
             return jsonify({'message' : 'Order screenshot successfully updated!'})

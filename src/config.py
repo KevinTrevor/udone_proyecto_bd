@@ -1,10 +1,12 @@
 from decouple import config
 
 class Config:
-    SECRETKEY = config('SECRETKEY')
+    SECRET_KEY = config('SECRETKEY')
 
 class DevelopmentConfig(Config):
     DEBUG = True
+    UPLOAD_FOLDER = 'C:\images'
+    
 
 config = {
     'development' : DevelopmentConfig

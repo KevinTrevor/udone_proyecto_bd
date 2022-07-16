@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request
+from flask import Flask
 from database import setup
 from config import config
 
@@ -34,5 +34,5 @@ def page_not_found(error):
 if __name__ == "__main__":
     app = create_app()
     app.config.from_object(config['development'])
-
+    
     app.run()
