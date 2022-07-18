@@ -62,6 +62,7 @@ class OrderModel:
     def select_order_by_query_params(self, data):
 
         sql = str(QueryParamsSQL.get_sql_query(data))
+        new_data = QueryParamsSQL.get_data_parsed(data)
 
         print(sql)
         
@@ -70,7 +71,10 @@ class OrderModel:
             orders = []
 
             with connection.cursor() as cursor:
-                cursor.execute(sql)
+                if new_data == ():
+                    cursor.execute(sql)
+                else:
+                    cursor.execute(sql, new_data)
                 result = cursor.fetchall()
                 
                 for row in result:

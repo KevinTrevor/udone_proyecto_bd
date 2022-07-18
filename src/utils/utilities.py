@@ -52,7 +52,7 @@ class FileExtension:
 
 
 class QueryParamsSQL:
-
+    
     @classmethod
     def get_sql_query(self, data):
         """Función que retorna una sentencia SQL dependiendo de la tupla de datos enviada.
@@ -63,23 +63,32 @@ class QueryParamsSQL:
 
         sql = "SELECT * FROM pedidos"
 
-        if data[0] is not None or data[1] is not None or data[2] is not None:
+        if (data[0] is not None and data[0] != '') or (data[1] is not None and data[1] != '') or (data[2] is not None and data[2] != ''):
             sql = sql + " " + "WHERE"
             if data[0] is not None and data[0] != '':
-                sql = sql + " " + f"fecha = '{data[0]}'"
+                sql = sql + " " + "fecha = (%s)"
 
                 if data[1] is not None and data[1] != '':
-                    sql = sql + " " + f"AND estado = '{data[1]}'"
+                    sql = sql + " " + f"AND estado = (%s)"
 
                 if data[2] is not None and data[2] != '':
-                    sql = sql + " " + f"AND cedula = '{data[2]}'"
+                    sql = sql + " " + f"AND cedula = (%s)"
 
             elif data[1] is not None and data[1] != '':
-                sql = sql + " " + f"estado = '{data[1]}'"
+                sql = sql + " " + f"estado = (%s)"
 
                 if data[2] is not None and data[2] != '':
-                    sql = sql + " " + f"AND cedula = '{data[2]}'"
+                    sql = sql + " " + f"AND cedula = (%s)"
 
             elif data[2] is not None and data[2] != '':
-                sql = sql + " " + f"cedula = '{data[2]}'"
+                sql = sql + " " + f"cedula = (%s)"
         return sql
+    
+    @classmethod
+    def get_data_parsed(self, data):
+        new_data = []
+        for value in data:
+            if value is not None and value != '':
+                new_data.append(value)
+        
+        return tuple(new_data)
