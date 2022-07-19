@@ -1,5 +1,5 @@
 # Proyecto de Base de Datos - Universidad de Oriente
-Este proyecto fue realizado por: Kevin Rojas y Nestor Aguilar.
+Este proyecto fue realizado por: Kevin Rojas C.I: 29582382 y Nestor Aguilar C.I: 28316308.
 # Enunciado
 Se requiere la construcción de una **api rest** que sirva para gestionar a los clientes y pedidos del restaurante de hamburguesas chikkins. Actualmente chikkins solo tiene hamburguesas sencillas de pollo entonces no necesitamos preocuparnos por gestionar los productos (por ahora). Chikkins solamente acepta pagos por Reserve, Pago móvil o efectivo. La hamburguesa cuesta $5. Trabaja con Delivery y pickup. El delivery es gratis en maneiro pero para los demás municipios cuesta $2.
     
